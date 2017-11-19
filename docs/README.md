@@ -29,7 +29,7 @@ HTTP Status code: 4XX-5XX
 GET /hotel/<smart contract address>
 
 ###Input:
-* Smart Contract address: The adress of the Hotel Smartcontract 
+* Smart Contract address: The address of the Hotel Smartcontract 
 
 ### Output:
 * name: Name of the Hotel Property

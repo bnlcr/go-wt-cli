@@ -1,46 +1,17 @@
 # REST JSON API Documentation
 
-# Hotel
-## Create an Hotel
-### URI and Ressource 
-PUT /hotel
+This REST API defines the interface exposed by the `go-wt` server, in order to interact with Winding Tree smartcontracts published on the ethereum blockchain.
 
-### Input:
-* name: Name of the Hotel Property
-* description: Description of the Hotel Property
-* timezone: Timezone where the hotel is located
-* address: Physical address of the Hotel Property
-* adress.lineOne: First line of the physical address
-* adress.lineTwo: Second line of the physical address
-* adress.zipCode: ZIP Code of the physical address
-* location: location of the Hotel Property
-* location.latitude: Latitude of the location of the Hotel Property
-* location.longitude: Longitude of the location of the Hotel Property
+Queries that implies a change on the blochain (eg: publishing smartcontract, modifying state) infer costs in ETH or LIF and therefore require prior user identification.
 
-### Output
-HTTP Status code: 200 - Success
-* address: Address of the created smartcontract on the Ethereum blockchain
+## General
 
-HTTP Status code: 4XX-5XX
-* errorDescription: Text of the error
+* The API is based on HTTP REST with JSON as data object modeling.
+* All fields are optional unless mentionned otherwise.
 
-## Retrieve an Hotel
-### URI
-GET /hotel/<smart contract address>
+## Ressources
 
-###Input:
-* Smart Contract address: The address of the Hotel Smartcontract 
+The API is split by ressources:
 
-### Output:
-* name: Name of the Hotel Property
-* description: Description of the Hotel Property
-* timezone: Timezone where the hotel is located
-* address: Physical address of the Hotel Property
-* adress.lineOne: First line of the physical address
-* adress.lineTwo: Second line of the physical address
-* adress.zipCode: ZIP Code of the physical address
-* location: location of the Hotel Property
-* location.latitude: Latitude of the location of the Hotel Property
-* location.longitude: Longitude of the location of the Hotel Property
-* manager: Ethereum address of the owner of the hotel
-
+* [User](User.md): Exposes methods to interact with the user on the blockchain
+* [Hotel](Hotel.md): Exposes methods to interact with hotel smartcontracts

@@ -2,7 +2,10 @@
 """
 Class to handle Console actions
 """
-from code import InteractiveConsole
+import code
+from client.hotel import Hotel
+from client.address import Address
+from client.location import Location
 
 class Console(object):
     """
@@ -17,6 +20,10 @@ class Console(object):
         # Initialize values
         self.server_host = 'localhost'
         self.server_port = 8456
+
+        # Set the namespace
+        self.namespace = None
+        self.interactive_console = code.InteractiveConsole()
 
         # Override values based on arguments from command line
         if args != None:
@@ -33,29 +40,39 @@ class Console(object):
         print( "(TODO: start list hotel shell)")
 
     def command_hotel_create(self):
-        print( "(TODO: start create hotel shell)")
+        self.interactive_console.write("Hotel Information:\n")
+        hotel_data = []
+        name = self.interactive_console.raw_input("Hotel Name? ")
+        description = self.interactive_console.raw_input("Hotel Description? ")
+        address = Address('MyLineOne', 'MyLineTwo', 'MyZipCode', 'MyCity', 'MyCountry')
+        location = Location('-669.556', '7878.545')
+        h = Hotel(name, description,'Europe/Berlin', address, location)
+        commit = self.interactive_console.raw_input("Gas fee: 0.05wei, commit on blockchain (yes/no)? ")
+        if(commit == 'yes'):
+            c = h.deploy()
+            self.interactive_console.write("Hotel Contract Created: " + hex(c) + "\n")
     
-    def command_hotel(self):
-        """
-        Run the hotel interactive shell
-        """
-        # Display helper message
-        print('Available commands: create, list, exit')
+    def command_help(self, command=None):
+        """ Display an help message """
+        help_message = ""
+        help_message += "Available commands:\n"
+        help_message += "\thelp: display this help message\n"
+        help_message += "\texit or quit or bye : Exits the CLI, or go back one level\n"
+        
+        # Commands for hotel
+        if command == 'hotel':
+            help_message += "\tcreate : Create an hotel\n"
 
-        # Start main loop
-        keyboard_input = ""
-        while keyboard_input != 'exit':
-            # Ask for a command
-            keyboard_input = InteractiveConsole.raw_input("(hotel)>>")
+        # If no command is set, we are at top level help
+        else:
+            help_message += "\thotel : Interacts with hotel\n"
+        
+        # Write help message in console
+        self.interactive_console.write(help_message)
 
-            # Handle command
-            if keyboard_input == 'create':
-                self.command_hotel_create()
-            elif keyboard_input == 'list':
-                self.command_hotel_list()
-            else:
-                print('Incorrect command. Available commands: create, list, exit')
-
+    def command_exit(self):
+        """ Display an exit message and terminates """
+        self.interactive_console.write("Bye.\n")
 
 
     def run(self):
@@ -63,21 +80,73 @@ class Console(object):
         Run the main console loop.
         Waits for event on the command line and answer to it
         """
-        # Display helper message
-        print('Winding Tree CLI Client')
-        print('Available commands: hotel, exit')
+        self.interactive_console.write("WT CLI Client\n")
+        self.command_help()
+        command = []
 
-        # Start main loop
-        keyboard_input = ""
-        while keyboard_input != 'exit':
-            # Ask for a command
-            keyboard_input = InteractiveConsole.raw_input(">>")
+        # Loop until the user asks to exit
+        try:
+            while not((len(command)==1) and (command[0] in ['exit', 'quit', 'bye'])):
+                # Command stack
+                #self.interactive_console.write('Stack:' + ','.join(command) + '\n')
 
-            # Handle command
-            if keyboard_input == 'hotel':
-                self.command_hotel()
+                # Prepare prompt
+                prompt = 'WT'
 
-            else:
-                print('Incorrect command. Available commands: hotel, exit')
+                # Handle commands
+                if(len(command)>0):
 
+                    # Handle exit
+                    if command[-1] in ['exit', 'quit', 'bye']:
+                        command.pop()
+                        command.pop()
 
+                    # Handle help
+                    elif command[0] == 'help':
+                        self.command_help()
+                        command.pop()
+
+                    # Handle Hotel
+                    elif command[0] == 'hotel':
+                        # Handle namespace
+                        if(len(command) == 1):
+                            prompt += ' hotel'
+
+                        # Handle help
+                        elif((len(command) == 2) and (command[1] == 'help')):
+                            prompt += ' hotel'
+                            self.command_help(command[0])
+                            command.pop()
+
+                        # Handle creation
+                        elif((len(command) == 2) and (command[1] == 'create')):
+                            prompt += ' hotel'
+                            self.command_hotel_create()
+                            command.pop()
+
+                        # Otherwise we need help
+                        elif(len(command) == 2):
+                            prompt += ' hotel'
+                            self.command_help(command[0])
+                            command.pop()
+                    
+                    # Command not knowned we delete the stack
+                    else:
+                        command = []
+                        self.command_help()
+
+                
+                # Read from keyboard
+                prompt += '>'
+                reads = self.interactive_console.raw_input(prompt)
+                if(len(reads) > 0):
+                    command.extend(reads.split(' '))
+
+        # Handle Keyboard exceptions, to avoid showing traceback
+        except KeyboardInterrupt:
+            self.interactive_console.write('\n')
+        except EOFError:
+            self.interactive_console.write('\n')
+        
+        # Show Exit message
+        self.command_exit()

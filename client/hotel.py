@@ -9,7 +9,7 @@ class Hotel(Contract):
     """
     Constructor for an hotel
     """
-    def __init__(self, name, description, timezone, address, location, owner=None):
+    def __init__(self, name, description, timezone, address, location, contract_address=None, contract_owner=None):
         #TODO: Implement consistancy checks
         # Initialize properties
         self.name = name
@@ -17,7 +17,8 @@ class Hotel(Contract):
         self.timezone = timezone
         self.address = address
         self.location = location
-        self.owner = owner
+        self.contract_owner = contract_owner
+        self.contract_address = contract_address
         self.unittypes = []
         self.units = []
 

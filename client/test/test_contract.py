@@ -12,12 +12,12 @@ class ContractInitUnitTest(unittest.TestCase):
     def test_init_without_address(self):
         """ Test a basic initialization without address"""
         my_contract = Contract()
-        self.assertEqual(my_contract.address, None)
+        self.assertEqual(my_contract.contract_address, None)
 
     def test_init_with_address(self):
         """ Test a basic initialization with address"""
         my_contract = Contract(0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae)
-        self.assertEqual(my_contract.address, 0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae)
+        self.assertEqual(my_contract.contract_address, 0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae)
 
 class ContractAbstractsUnitTest(unittest.TestCase):
     """
@@ -38,7 +38,7 @@ class ContractDeploymentUnitTest(unittest.TestCase):
         """ Deploy a contract with success """
         my_contract = Contract()
         my_contract.deploy()
-        self.assertEqual(my_contract.address, 0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae)
+        self.assertEqual(my_contract.contract_address, 0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae)
 
     def test_deploy_already_deployed(self):
         """ Attempting to deploy a contract already deployed should raise an exception """

@@ -14,7 +14,7 @@ Retrieves the details from a given Hotel Smartcontract.
 
 ### Output
 
-* `name`: Name of the Hotel Property 
+* `name`: Name of the Hotel Property
 * `description`: Description of the Hotel Property
 * `timezone`: Timezone where the hotel is located
 * `address`: Physical address of the Hotel Property

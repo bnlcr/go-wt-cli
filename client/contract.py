@@ -37,7 +37,7 @@ class Contract(object):
         self.contract_address = contract_address
         self.contract_owner = contract_owner
         self.last_syncronization = None
-        self.api_endpoint = 'localhost:8080'
+        self.api_endpoint = 'localhost:8181'
 
     def get_contract_rest_payload(self):
         """

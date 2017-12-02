@@ -3,6 +3,7 @@
 Class to handle Console actions
 """
 import code
+import logging
 from client.hotel import Hotel
 from client.address import Address
 from client.location import Location
@@ -59,7 +60,7 @@ class Console(object):
         should_deploy = self.interactive_console.raw_input("Gas fee: 0.05wei, deploy on blockchain (yes/no)? ")
         if(should_deploy == 'yes'):
             hotel_contract_address = hotel.deploy()
-            self.interactive_console.write("Hotel Contract Created: " + hex(hotel_contract_address) + "\n")
+            self.interactive_console.write("Hotel Contract Created: " + hotel_contract_address + "\n")
     
     def command_help(self, command=None):
         """ Display an help message """
@@ -89,6 +90,8 @@ class Console(object):
         Run the main console loop.
         Waits for event on the command line and answer to it
         """
+        logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
+
         self.interactive_console.write("WT CLI Client\n")
         self.command_help()
         command = []

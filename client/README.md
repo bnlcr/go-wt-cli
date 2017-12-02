@@ -1,5 +1,11 @@
 # Client CLI
 
+# Client
+
+## Pre-requisites
+
+* python 3.6
+
 ## Usage
 
 ```

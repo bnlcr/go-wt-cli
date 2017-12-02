@@ -15,3 +15,5 @@ The API is split by ressources:
 
 * [User](User.md): Exposes methods to interact with the user on the blockchain
 * [Hotel](Hotel.md): Exposes methods to interact with hotel smartcontracts
+
+

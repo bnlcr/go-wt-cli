@@ -115,3 +115,9 @@ Allows an Hotelier to delete an existing Hotel on the Blockchain using the Windi
 * `200`: Success
 * `401`: Not Authorized to delete the Hotel, operation restricted to the owner.
 * `404`: Hotel Contract not found
+
+## Annexes
+
+### Authentication for calls with associated costs
+
+![Authentication Sequence](https://www.websequencediagrams.com/cgi-bin/cdraw?lz=cGFydGljaXBhbnQgSGFyZHdhcmVXYWxsZXQKAA8MQ2xpZW4ABQ5TZXJ2ZXIAGQ1HZXRoCgAlBi0-ABoGOiBIVFRQIFJFU1QgQ2FsbAoAMQYtLT4ATQYAGQc0MDEgd2l0aCBQYXlsb2FkIGFuZCBnYXMgY29zdABKCQArCFNpZ24AIQkAMgVwcml2IGtleQpvcHQgaWYAgUIJIACBRgY6AIENCQCBVg46AGcJdG8gc2lnbgoAgXYOAIEcC1NpZ25hdHVyZQplbHNlIGlmIE5vAIIiEACBGBBBc2sgZm9yAIEZBWF0ZQCBHAUAgTwQR2VuZXJhdGUAVQxuZCBvcACBbQoAgjgSAIIeCCsAgQwLAIJSBz5HZXRoOgCCZgZHZXRoLQCDAAoAgmoWdHhIYXNo&s=rose)

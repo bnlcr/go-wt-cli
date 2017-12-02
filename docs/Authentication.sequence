@@ -1,0 +1,21 @@
+title Authentication Sequence
+
+
+participant HardwareWallet
+participant Client
+participant Server
+participant Geth
+Client->Server: HTTP REST Call
+Server-->Client: HTTP 401 with contract Payload and gas cost
+Client->Client: Sign Payload with priv key
+opt if Hardware Wallet:
+Client->HardwareWallet: Payload to sign
+HardwareWallet-->Client: Signature
+else if No HardwareWallet
+Client->Client: Ask for private key
+Client->Client: Generate Signature
+end opt
+Client->Server: HTTP REST Payload + Signature
+Server->Geth: Create Contract
+Geth-->Server: Contract Address
+Server-->Client: Contract Address

@@ -124,7 +124,7 @@ class ConsoleRunUnitTest(unittest.TestCase):
         # Use the console check tool
         ConsoleRunUnitTest.check_console_sequence(self, expected_lines, expected_prompts, mock_write, mock_raw_input)
 
-    @patch("client.contract.Contract.execute_api_call", return_value={'address': 0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae})
+    @patch("client.contract.Contract.execute_api_call", return_value={'address': "0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae"})
     @patch("code.InteractiveConsole.write", return_value=None) 
     @patch("code.InteractiveConsole.raw_input", side_effect=['hotel','create','my_hotel','my_desc','yes','exit','exit'])
     def test_hotel_contract_creation_success(self,mock_raw_input, mock_write, mock_api):

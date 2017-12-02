@@ -5,6 +5,7 @@ from datetime import datetime
 import http.client
 import urllib.parse
 import json
+import logging
 
 class ContractException(Exception):
     """ Exception raised by the Contract Class """
@@ -57,7 +58,7 @@ class Contract(object):
         request_data = {}
         if data:
             request_data.update(data)
-        post_data = urllib.parse.urlencode(request_data)
+        post_data = json.dumps(request_data)
 
         # Create Headers
         headers = {
@@ -66,12 +67,16 @@ class Contract(object):
         }
 
         # Build Connection
-        connexion = http.client.HTTPSConnection(self.api_endpoint)
+        #connexion = http.client.HTTPSConnection(self.api_endpoint)
+        logging.info(method + ' ' + api_path + ': ' + str(post_data))
+        connexion = http.client.HTTPConnection(self.api_endpoint)
         connexion.request(method, api_path, post_data, headers)
         response = connexion.getresponse()
 
         # Check the HTTP Status code
         if response.status not in [200, 201, 202]:
+            logging.warning('HTTP Error: ' + str(response.status))
+            logging.debug('HTTP Response: ' + response.read().decode())
             raise ContractConnexionError('HTTP error: ' + str(response.status))
 
         # Interpret output as JSON

@@ -6,4 +6,10 @@
 go get -u github.com/bnlcr/go-wt-cli/server
 ```
 
-The server runs on port 8181. 
+## Start the server
+
+```sh
+go run server/main.go
+```
+
+The server runs on port 8181.

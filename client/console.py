@@ -40,17 +40,26 @@ class Console(object):
         print( "(TODO: start list hotel shell)")
 
     def command_hotel_create(self):
+        """ Interactive menu to create an hotel """
+        # Basic Information
         self.interactive_console.write("Hotel Information:\n")
-        hotel_data = []
-        name = self.interactive_console.raw_input("Hotel Name? ")
-        description = self.interactive_console.raw_input("Hotel Description? ")
-        address = Address('MyLineOne', 'MyLineTwo', 'MyZipCode', 'MyCity', 'MyCountry')
-        location = Location('-669.556', '7878.545')
-        h = Hotel(name, description,'Europe/Berlin', address, location)
-        commit = self.interactive_console.raw_input("Gas fee: 0.05wei, commit on blockchain (yes/no)? ")
-        if(commit == 'yes'):
-            c = h.deploy()
-            self.interactive_console.write("Hotel Contract Created: " + hex(c) + "\n")
+        hotel = Hotel()
+        hotel.name = self.interactive_console.raw_input("Hotel Name? ")
+        hotel.description = self.interactive_console.raw_input("Hotel Description? ")
+        hotel.timezone = 'Europe/Berlin'
+
+        #TODO: Remove hardcode and use GeoIP to recommend a location
+        hotel.location = Location('-669.556', '7878.545')
+
+        #TODO: Remove hardcode and use an API to propose an adress
+        hotel.address = Address('MyLineOne', 'MyLineTwo', 'MyZipCode', 'MyCity', 'MyCountry')
+        
+        # Ask confirmation before deploying
+        # TODO: Compute actual gas price
+        should_deploy = self.interactive_console.raw_input("Gas fee: 0.05wei, deploy on blockchain (yes/no)? ")
+        if(should_deploy == 'yes'):
+            hotel_contract_address = hotel.deploy()
+            self.interactive_console.write("Hotel Contract Created: " + hex(hotel_contract_address) + "\n")
     
     def command_help(self, command=None):
         """ Display an help message """

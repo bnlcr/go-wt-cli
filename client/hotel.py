@@ -9,26 +9,30 @@ class Hotel(Contract):
     """
     Constructor for an hotel
     """
-    def __init__(self, name, description, timezone, address, location, contract_address=None, contract_owner=None):
-        #TODO: Implement consistancy checks
+    def __init__(self, contract_address=None, contract_owner=None):
         # Initialize properties
-        self.name = name
-        self.description = description
-        self.timezone = timezone
-        self.address = address
-        self.location = location
-        self.contract_owner = contract_owner
-        self.contract_address = contract_address
+        Contract.__init__(self, contract_address, contract_owner)
+        self.name = None
+        self.description = None
+        self.timezone = None
+        self.address = None
+        self.location = None
         self.unittypes = []
         self.units = []
 
-    def get_contract_payload(self):
+    def get_contract_rest_ressource(self):
+        """
+        Returns the contract ressource
+        """
+        return '/hotels'
+
+    def get_contract_rest_payload(self):
         """
         Returns the hotel contract payload
         """
-        return { 
-            'name': self.name, 
-            'description': self.description, 
+        return {
+            'name': self.name,
+            'description': self.description,
             'timezone': self.timezone,
             'address': {
                 'lineOne': self.address.line_one,
